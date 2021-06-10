@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block body %}
+{% load filter %}
+<div class="container">
+    <div class="row">
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Product Image</th>
+                <th scope="col">Product Name</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Price</th>
+
+                <th scope="col">Bye Now</th>
+                <th scope="col">Remove</th>
+
+
+             
+              </tr>
+            </thead>
+            <tbody>
+            {% for pro in product %}
+            <tr>
+                <td><img src="{{pro.thumbnail.url}}"  style="height: 60px;" alt=""></td>
+                
+                <td>{{pro.name}}</td>
+                <td>{% quantity request.session.cart pro.id %}</td>
+
+                <td>{% rate pro.price pro.discount request.session.cart pro.id %}</td>
+                <td><a href="{% url 'checkout' pro.id %}" class="btn btn-warning"> <b>Bye Now</b></a></td>
+                <td><form action="/removecart/" method="GET">
+                {% csrf_token %}
+                <button type="submit" name="removecart" class="btn btn-danger" value="{{pro.id}}"><b>Remove</b> </button>
+                </form></td>
+
+
+
+                
+
+              </tr>
+            {% endfor %}
+            </tbody>
+            
+          </table>
+          
+        
+    </div>
+</div>
+  
+{% endblock body %}

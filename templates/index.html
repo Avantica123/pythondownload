@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load filter %}
+{% block body %}
+
+<div class="container">
+    <div class="row mt-3">
+        <div class="col-3">
+            <div class="list-group">
+                <a href="/" class="list-group-item list-group-item-action {% if activate is None %} active
+                  
+                {% endif %}" aria-current="true">
+                  All Items
+              
+                </a>
+                
+                {% for cate in category %}
+         
+              
+                <a href="?category={{cate.id}}" class="list-group-item list-group-item-action {% if activate is cate.id %}active
+                  
+                {% endif %}" aria-current="true">{{cate.title}}</a>
+                
+                  
+                {% endfor %}
+              </div>
+            <!-- <ul class="list-group">
+                 <a href="/">All Product</a> 
+               {% for cate in category %}
+              
+               <a href="?category={{cate.id}}"> <li class="list-group-item">{{cate.title}}</li></a>
+                 
+               {% endfor %}
+              </ul> -->
+        </div>
+        {% for product in products %}
+        <div class="col-3">
+            <div class="card" style="width: 18rem;">
+                <img src="{{product.thumbnail.url}}" style="height: 200px;" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">{{product.name}}</h5>
+                    <p>Rs: <del>{{product.price}}</del> &nbsp; Rs:{% pppp product.price product.discount %} </p>
+                    <p> Save: {{product.discount}}%</p>
+                    
+                    <a href="{% url 'aboutproduct' product.id %}" style="width: 100%;" class="btn btn-info"><b>Purchase It Now</b></a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock body %}
